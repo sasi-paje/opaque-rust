@@ -188,6 +188,13 @@ impl EnvelopeMode {
     /// * `client_pri_key`: The encoded client private key.
     /// * `client_pub_key`: The encoded client public key.
     fn external_recover_keys(_pwd: String, _nonce: Vec<u8>) { // -> (Vec<u8>, Vec<u8>)
+        /*
+        1. encrypted_creds = inner_env.encrypted_creds
+        2. pseudorandom_pad = Expand(randomized_pwd, concat(nonce, "Pad"), len(encrypted_creds))
+        3. client_private_key = xor(encrypted_creds, pseudorandom_pad)
+        4. client_public_key = RecoverPublicKey(client_private_key)
+        5. Output (client_private_key, client_public_key)
+        */
     }
 }
 
