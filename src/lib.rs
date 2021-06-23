@@ -1,9 +1,8 @@
 //! # About
 //! Implementation of the Opaque protocol in Rust with integration support for wasm, ffi and others. 
-//! This implementation is directly in sync with the [draft-irtf-cfrg-opaque](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-opaque) 
-//! and is based on [draft-irtf-cfrg-opaque poc](https://github.com/cfrg/draft-irtf-cfrg-opaque). It's also worth to mention the 
-//! [opaque-ke](https://github.com/novifinancial/opaque-ke) which inspired me to do this; those guys are doing an awesome job but our projects
-//! have slightly different objectives to accomplish.
+//! This implementation is directly in sync with the [draft-irtf-cfrg-opaque](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-opaque).
+//! It's also worth to mention the [opaque-ke](https://github.com/novifinancial/opaque-ke) which inspired me to do this;
+//! those guys are doing an awesome job but our projects have slightly different objectives to accomplish.
 //! The main objective is to build an easy interface with external resources to use Rust's power with another languages and frameworks
 //! in order to build secure authentication flows using the Opaque protocol even in no-Rust environments.
 //! 
@@ -41,6 +40,8 @@
 //! 
 //! After that, client and server can use these values as needed.
 //! 
+
+pub mod envelope;
 
 pub fn hello_world() -> String {
     String::from("Hello, world!")
