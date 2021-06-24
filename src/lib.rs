@@ -10,7 +10,7 @@
 //! consistent as possible in order to start using it out of the box without major problems.
 //! 
 //! # Opaque Protocol
-//! Note: This section is just summarizing the [protocol overview](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-opaque#section-3) 
+//! Note: This section is just summarizing the [protocol overview](https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-opaque#section-3)
 //! section of the internet-draft, for more information, please read the draft.
 //! 
 //! Opaque is an asymmetric PAKE (aPAKE) protocol in which a client authenticates within a server with password+identifier, but neither
@@ -19,10 +19,12 @@
 //! techiniques), maybe in the future they'll be implemented here as well.
 //! 
 //! Opaque consists of two stage: registration and authenticated key exchange (AKE). Both are described below, and you can check everything in the
-//! examples. 
+//! examples.
+//!
+//! Note: You can see more information about each stage on the docs for the [`opaque`] mod.
 //! 
 //! ## Registration Stage
-//! In the registration stage, both the client and the server need to input some informations: the client needs to input its password+identifier;
+//! In the registration stage, both the client and the server need to input some information: the client needs to input its password+identifier;
 //! the server needs some parameters (private key* and other information depending on the variation). 
 //! 
 //! The client outputs a ```export_key``` that it may use for "application-specific purposes" (i.e. encrypt information to the server).
@@ -42,6 +44,8 @@
 //! 
 
 pub mod envelope;
+pub mod messages;
+pub mod opaque;
 
 pub fn hello_world() -> String {
     String::from("Hello, world!")
