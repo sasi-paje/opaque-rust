@@ -40,7 +40,7 @@ impl RegistrationResponse {
     ///
     /// * `request`: A RegistrationRequest structure;
     /// * `server_pub_key`: Server's public key;
-    /// * `identifier`: Client's credential identifier;
+    /// * `identifier`: User's credential identifier;
     /// * `oprf_seed`: Server-side seed;
     ///
     /// # Returns
