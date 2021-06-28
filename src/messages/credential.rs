@@ -1,6 +1,6 @@
 use crate::messages::registration::RegistrationUpload;
 
-struct CredentialRequest {
+pub struct CredentialRequest {
     /// Serialized OPRF group element.
     data: Vec<u8>,
 }
@@ -27,7 +27,7 @@ impl CredentialRequest {
     }
 }
 
-struct CredentialResponse {
+pub struct CredentialResponse {
     /// Serialized OPRF group element.
     data: Vec<u8>,
     /// A nonce used for the confidentiality of the masked_response field.

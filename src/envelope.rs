@@ -134,7 +134,7 @@ impl EnvelopeMode {
     ///
     /// * `private_key`: a private key.
     /// * `public_key`: the associated public key.
-    fn derive_auth_keypair(seed: Vec<u8>) { // -> Vec<u8>
+    fn derive_auth_keypair(_seed: Vec<u8>) { // -> Vec<u8>
         /*
         1. private_key = HashToScalar(seed, dst="OPAQUE-HashToScalar")
         2. public_key = ScalarBaseMult(private_key)
@@ -244,8 +244,8 @@ impl Envelope {
         _pwd: String,
         _server_pub_key: Vec<u8>,
         _client_private_key: Vec<u8>,
-        _server_identity: Option<Vec<u8>>,
-        _client_identity: Option<Vec<u8>>,
+        _server_identity: Option<Vec<String>>,
+        _client_identity: Option<Vec<String>>,
     ) {  // -> (Self, Vec<u8>, Vec<u8>, Vec<u8>) {
         /*
         1. envelope_nonce = random(Nn)
@@ -283,8 +283,8 @@ impl Envelope {
         _mode: EnvelopeMode,
         _pwd: String,
         _server_pub_key: Vec<u8>,
-        _server_identity: Option<Vec<u8>>,
-        _client_identity: Option<Vec<u8>>,
+        _server_identity: Option<Vec<String>>,
+        _client_identity: Option<Vec<String>>,
     ) { // -> (Vec<u8>, Vec<u8>)
         /*
         1. auth_key = Expand(randomized_pwd, concat(envelope.nonce, "AuthKey"), Nh)

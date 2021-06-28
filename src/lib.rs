@@ -46,6 +46,7 @@
 pub mod envelope;
 pub mod messages;
 pub mod opaque;
+pub mod ake;
 
 pub fn hello_world() -> String {
     String::from("Hello, world!")

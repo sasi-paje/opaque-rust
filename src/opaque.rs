@@ -62,57 +62,5 @@
 //! - Mutually authenticated shared secret key;
 //! - Any optional application information exchange during the handshake.
 //!
-//! The client inputs:
-//! - password: client's password.
-//! - client_identity: client identity as defined during registration.
+//! The key exchange (AKE) flow can be seen on the [`crate::ake`] module description.
 //!
-//! The client receives:
-//! - export_key: a key only available to the client that may be used for additional application-specific purposes.
-//! - session_secret: a secret used to identify the user's session. (something token-like)
-//!
-//! Note: export_key MUST NOT be used in any way before the protocol completes.
-//!
-//! The server inputs:
-//! - server_pri_key: server private key.
-//! - server_pub_key: server public key.
-//! - server_identity: server identity as defined during registration.
-//! - record: [`crate::messages::registration::RegistrationUpload`] stored during registration.
-//! - credential_identifier: client credential identifier.
-//! - oprf_seed: seed used to derive per-client OPRF keys.
-//!
-//! The server receives:
-//! - session_secret: a secret matching that one of the client.
-//!
-//! The protocol runs as shown below:
-//! ```txt
-//!     Client                                         Server
-//!     ------------------------------------------------------
-//!      ke1 = ClientInit(client_identity, password)
-//!                  -----------ke1----------->
-//!
-//!
-//!             ke2 = ServerInit(
-//!                         server_identity,
-//!                         server_private_key,
-//!                         server_public_key,
-//!                         record,
-//!                         credential_identifier,
-//!                         oprf_seed,
-//!                         ke1
-//!                   )
-//!                  <----------ke2------------
-//!
-//!
-//!      (ke3, session_key, export_key) = ClientFinish(
-//!                                             password,
-//!                                             client_identity,
-//!                                             server_identity,
-//!                                             ke2
-//!                                       )
-//!                  -----------ke3----------->
-//!
-//!                  session_key = ServerFinish(ke3)
-//! ```
-//!
-//!
-
