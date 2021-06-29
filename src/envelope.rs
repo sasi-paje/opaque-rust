@@ -41,7 +41,7 @@ pub struct InnerEnvelope {
     credentials: Vec<u8>,
 }
 
-pub(crate) enum EnvelopeMode {
+pub enum EnvelopeMode {
     /// Internal mode: In this mode, the client's private and public keys are deterministically derived
     /// from the OPRF output. In this case, there are no [`InnerEnvelope`].
     Internal,
