@@ -8,6 +8,7 @@ use digest::{Digest, BlockInput};
 use digest::generic_array::typenum::Unsigned;
 use curve25519_dalek::scalar::Scalar;
 use curve25519_dalek::ristretto::RistrettoPoint;
+use curve25519_dalek::digest::Output;
 
 static STR_VOPRF: &[u8] = b"VOPRF06-HashToGroup-";
 static STR_VOPRF_FINALIZE: &[u8] = b"VOPRF06-Finalize-";
@@ -50,16 +51,19 @@ pub(crate) fn evaluate(point: RistrettoPoint, oprf_key: &Scalar) -> RistrettoPoi
     point * oprf_key
 }
 
-pub(crate) fn finalize(_input: Vec<u8>, _blind: Vec<u8>, _element: Vec<u8>) { // -> Vec<u8>
-    /*
-     unblindedElement = Unblind(blind, evaluatedElement)
+pub(crate) fn finalize(input: &[u8], blind: &Scalar, element: RistrettoPoint) -> Vec<u8> {
+    let unblinded = element * blind.invert();
+    let dst = [STR_VOPRF_FINALIZE, &get_context_string(MODE_BASE)].concat();
 
-     finalizeDST = "VOPRF06-Finalize-" || self.contextString
-     hashInput = I2OSP(len(input), 2) || input ||
-                 I2OSP(len(unblindedElement), 2) || unblindedElement ||
-                 I2OSP(len(finalizeDST), 2) || finalizeDST
-     return Hash(hashInput)
-     */
+    let compressed = unblinded.compress();
+    let unblinded_arr = compressed.as_bytes();
+
+    let hash_input = [
+        serialize(input, 2),
+        serialize(unblinded_arr, 2),
+        serialize(&dst, 2),
+    ].concat();
+    <Sha512 as Digest>::digest(&hash_input).to_vec()
 }
 
 
@@ -138,4 +142,8 @@ fn expand_message_xmd(msg: &[u8], dst: &[u8], len_bytes: usize) -> io::Result<Ve
 
 fn get_context_string(mode: u8) -> Vec<u8> {
     [i2osp(mode as usize, 1), i2osp(SUITE_ID, 2)].concat()
+}
+
+fn serialize(input: &[u8], max_bytes: usize) -> Vec<u8> {
+    [&i2osp(input.len(), max_bytes), input].concat()
 }
