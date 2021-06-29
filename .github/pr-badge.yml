@@ -1,0 +1,15 @@
+- label: "JIRA"
+  message: "$issuePrefix"
+  color: "blue"
+  url: "https://sasiapp.atlassian.net/browse/$issuePrefix"
+  when: "$issuePrefix"
+
+- label: "PR Size"
+  message: "Large"
+  color: "red"
+  when: "$additions > 500"
+
+- label: "PR Size"
+  message: "Medium"
+  color: "yellow"
+  when: "$additions > 200 && $additions < 500"
