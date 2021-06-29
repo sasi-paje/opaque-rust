@@ -46,16 +46,8 @@ pub(crate) fn blind(input: &[u8]) -> io::Result<(Vec<u8>, Scalar, RistrettoPoint
     Ok((input.to_vec(), blind, blinded_element))
 }
 
-pub(crate) fn evaluate(_private_key: Vec<u8>, _public_key: Vec<u8>, _blinded_element: Vec<u8>) { // ->
-    /*
-     R = GG.DeserializeElement(blindedElement)
-     Z = skS * R
-     evaluatedElement = GG.SerializeElement(Z)
-
-     proof = GenerateProof(skS, pkS, blindedElement, evaluatedElement)
-
-     return evaluatedElement, proof
-     */
+pub(crate) fn evaluate(point: RistrettoPoint, oprf_key: &Scalar) -> RistrettoPoint {
+    point * oprf_key
 }
 
 pub(crate) fn finalize(_input: Vec<u8>, _blind: Vec<u8>, _element: Vec<u8>) { // -> Vec<u8>
