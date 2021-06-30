@@ -19,7 +19,7 @@ static SUITE_ID: usize = 0x0001;
 ///
 /// # Arguments
 ///
-/// * `input`: A user input to be blinded.
+/// * `input`: A user input to be blinded (in our case, the user password).
 ///
 /// # Returns
 ///
@@ -47,10 +47,33 @@ pub(crate) fn blind(input: &[u8]) -> io::Result<(Vec<u8>, Scalar, RistrettoPoint
     Ok((input.to_vec(), blind, blinded_element))
 }
 
+/// Computes the (V)OPRF evaluation over the client's blinded token, according to the specs on the rfc
+/// (https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-voprf-06#section-3.4.1.1).
+///
+/// # Arguments
+///
+/// * `point`: the serialized element (a ristretto point in our case).
+/// * `oprf_key`: a private key (a Scalar in our case).
+///
+/// # Returns
+///
+/// * `evaluated_element`: the evaluated value (another ristretto point in our case).
 pub(crate) fn evaluate(point: RistrettoPoint, oprf_key: &Scalar) -> RistrettoPoint {
     point * oprf_key
 }
 
+/// The client unblinds the server response, verifies the server's proof if verifiability is required,
+/// and produces a byte array corresponding to the output of the OPRF protocol.
+///
+/// # Arguments
+///
+/// * `input`: A user input to be blinded (in our case, the user password).
+/// * `blind`: A random scalar used during the blind method as the blind factor.
+/// * `element`: The element that was evaluated.
+///
+/// # Returns
+///
+/// * `output`: A byte array used as the OPRF output.
 pub(crate) fn finalize(input: &[u8], blind: &Scalar, element: RistrettoPoint) -> Vec<u8> {
     let unblinded = element * blind.invert();
     let dst = [STR_VOPRF_FINALIZE, &get_context_string(MODE_BASE)].concat();
