@@ -118,7 +118,7 @@ impl ClientState {
     /// * `session_key`: session's shared secret
     pub fn client_finish(
         &self,
-        _pwd: string,
+        _pwd: String,
         _ke1: KE1,
         _ke2: KE2,
         _client_identity: Option<Vec<String>>,

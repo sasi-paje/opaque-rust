@@ -43,7 +43,7 @@
 //! After that, client and server can use these values as needed.
 //! 
 
-pub(crate) mod oprf;
+pub mod oprf;
 pub mod envelope;
 pub mod messages;
 pub mod opaque;
